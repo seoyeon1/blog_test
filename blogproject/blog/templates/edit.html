@@ -1,0 +1,25 @@
+{% extends 'base.html' %}<!-- 템플릿 상속(base를 기본 뼈대로 가져와 쓰겠다) -->
+
+{% block content %}
+
+
+<!-- 수정하기 위한 page -->
+<br>
+<div class="container">
+  <!--post 방식: body에다가 글을 써서 보내는 방식. 입력된 내용 크기제한X, 입력한 내용이 노출되지 않음-->
+  <!-- 블로그 아이디를 받는 edit으로 넘어가게 URL을 지정, post방식 사용 -->
+  <form action="{% url 'edit' blog.id %}" method="POST">
+    {% csrf_token %}
+    <!--사이트 간 요청 위조(CSRF)에 대항하기위해 장고에서 발행하는 토큰(POST폼에 이 태그 사용하면 됨.)-->
+    <h4>title: </h4>
+    <input type="text" name="title" value="{{blog.title}}">
+    <br><br>
+    <h4>body: </h4>
+    <textarea name="body" cols="40" rows="10">{{blog.body}}</textarea>
+    <br><br>
+    <input type="submit" class="btn btn-dark" value="제출하기">
+  </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}<!-- 템플릿 상속(base를 기본 뼈대로 가져와 쓰겠다) -->
+
+{% block content %}
+<!-- 여기서부터 endblock전까지 내용(=content)이 base에다가 지정해줬던 곳(line 66,67사이)에 들어감 -->
+
+<!-- blog 객체 하나씩 접근해 data를 적절히 배치(title, pub_date, body) -->
+  {% for blog in posts %}
+  <br>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{blog.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{blog.pub_date}}</h6>
+        <p class="card-text">{{blog.summary}}</p>
+        <a href="{% url 'detail' blog.id %}" class="card-link">...more</a>
+        <a href="{% url 'edit' blog.id %}" class="card-link">수정하기</a>
+        <a href="{% url 'delete' blog.id %}" class="card-link">삭제</a>
+        <!-- templates에 edit.html추가, 수정하기를 누르면 수정할 수 있게 home.html에 <a>태그 추가-->
+        <!-- 삭제할 수 있게 home.html에 <a>태그 추가 -->
+
+      </div>
+    </div><br>
+  </div>
+  {%endfor%}
+
+  <div class="container">
+      {% if posts.has_previous%}
+      <a href="?page=1">First</a>
+      <a href="?page={{posts.previous_page_number}}">Previous</a>
+      {%endif%}
+
+      <span>{{posts.number}}</span>
+      <span>of</span>
+      <span>{{posts.paginator.num_pages}}</span>
+
+      {% if posts.has_next%}
+      <a href="?page={{posts.next_page_number}}">Next</a>
+      <a href="?page={{posts.paginator.num_pages}}">Last</a>
+      {%endif%}
+
+  </div>
+
+{% endblock %}

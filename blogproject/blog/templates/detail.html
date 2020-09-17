@@ -1,0 +1,17 @@
+{% extends 'base.html' %}<!-- 템플릿 상속(base를 기본 뼈대로 가져와 쓰겠다) -->
+
+{% block content %}
+
+
+<!-- 세부내용을 알려주는 page -->
+<!-- datail을 누르면 전체 내용이 보이게 추가-->
+<div class="container">
+  <h1>세부 내용을 알려드립니다.</h1>
+  <br><br>
+  <h1>{{detail.title}}</h1>
+  <p>{{detail.pub_date}}</p>
+  <p>{{detail.body}}</p>
+</div>
+
+
+{% endblock %}

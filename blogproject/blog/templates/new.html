@@ -1,0 +1,25 @@
+{% extends 'base.html' %}<!-- 템플릿 상속(base를 기본 뼈대로 가져와 쓰겠다) -->
+
+{% block content %}
+
+
+<!-- form태그 이용해서 글쓰기 창 만들기 -->
+<br>
+<div class="container">
+  <form action="{% url 'create' %}">
+    <!-- new.html에서 작성한 글이 제출btn을 누르면 저장되게 하기 위해
+            action 속성을 이용해 <form> 태그에 입력된 내용을 처리하는 서버 프로그램의 URI를 지정
+            (create는 뒤에서 만들면서 언급하겠음)-->
+    <h4>title: </h4>
+    <input type="text" name="title">
+    <br><br>
+    <h4>body: </h4>
+    <textarea name="body" cols="40" rows="10"></textarea>
+    <br><br>
+    <input type="submit" class="btn btn-dark" value="제출하기">
+
+  </form>
+</div>
+
+
+{% endblock %}
