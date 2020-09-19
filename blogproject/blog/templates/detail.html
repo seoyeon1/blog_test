@@ -1,7 +1,6 @@
-{% extends 'base.html' %}<!-- 템플릿 상속(base를 기본 뼈대로 가져와 쓰겠다) -->
+{% extends 'base.html' %}
 
 {% block content %}
-
 
 <!-- 세부내용을 알려주는 page -->
 <!-- datail을 누르면 전체 내용이 보이게 추가-->
@@ -13,5 +12,25 @@
   <p>{{detail.body}}</p>
 </div>
 
+<div class="container">
+  <form action="{%url 'comment_add' detail.id%}" method="POST">
+      {% csrf_token %}
+      내용 : <input type="text" name="body">
+      <input type="submit" value="제출"> 
+  </form>
+  {% for comment in detail.comments.all%}
+    {{comment.user.username}} : {{comment.body}}
+    <br>
+    {% if comment.user == request.user%}
+    <a href="{% url 'comment_edit' comment.id%}">edit</a>
+    <a href="javascript:{document.getElementById('delete').submit()}">delete</a>
+    <form id='delete' method="POST" action="{% url 'comment_delete' comment.id%}">
+        {% csrf_token %}
+        <input type="hidden" />
+    </form>
+    {%endif%}
+    <br>
+{%endfor%}
+</div> 
 
-{% endblock %}
+{%endblock%}

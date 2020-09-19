@@ -5,6 +5,8 @@ from .models import Blog
 from django.core.paginator import Paginator
 from django.utils import timezone #입력한 시간이 자동으로 넘기기 위해 timezone 패키지 import함.
 #model에서 template으로 바로 내용을 보낼 수 x, views.py를 거쳐 보내야 함.
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
@@ -58,3 +60,17 @@ def delete(request, blog_id):#각 게시물마다 필요하니까 blog_id를 인
     blog = get_object_or_404(Blog, pk=blog_id)
     blog.delete()#각 Blog 객체 별로 DB에 delete 요청
     return redirect('/')#/(root(=http://127.0.0.1:8000/))주소로 url 요청을 다시함.
+
+
+@login_required
+def comment_add(request, blog_id):
+    if request.method == 'POST': 
+        post = Blog.objects.get(pk=blog_id)
+        comment = Comment()
+        comment.user = request.user
+        comment.body = request.POST['body']
+        comment.post = post
+        comment.save()
+        return redirect('/blog/'+str(blog_id))
+    else:
+        return HttpResponse('잘못된 접근')
