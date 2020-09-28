@@ -74,3 +74,4 @@ def comment_add(request, blog_id):
         return redirect('/blog/'+str(blog_id))
     else:
         return HttpResponse('잘못된 접근')
+
